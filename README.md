@@ -119,10 +119,10 @@ browser was open.
 
 | Field | Type |
 | --- | --- |
-| `user` | `NemiUser \| null` (`id`, `name`, `username`, `picture`, `email`, `emailVerified`) |
+| `user` | `NemiUser \| null` (`id`, `name`, `preferredUsername`, `picture`, `email`, `emailVerified`) |
 | `isLoading` | `true` while the stored session loads or a sign in runs |
 | `isSignedIn` | `boolean` |
-| `signIn(options?)` | Resolves with the user, or `null` when cancelled or failed. Never throws. |
+| `signIn(options?)` | Resolves with the user, or `null` when cancelled or failed. Never throws. Options: `scopes`, `prompt` (`"consent"` or `"none"`). |
 | `signOut()` | Revokes the refresh token at Nemi and clears the store |
 | `client` | `NemiClient` from `@guuslab/nemi`, with automatic refresh |
 | `error` | Last error, or `null`. A cancel is not an error. |
@@ -173,6 +173,11 @@ Also available: `refresh()`, `reloadUser()`, `getTokens()`, `getState()`,
 `fetch` (adds the bearer token and retries once after a refresh, but only for
 URLs under `apiBaseUrl`; anything else, such as a presigned upload URL, goes
 out without the token) and `core` (the core SDK's `NemiAuth`).
+
+`prompt` supports only `"consent"` (always show the consent screen) and
+`"none"` (never show any screen: when the person would have to sign in or
+consent, the redirect carries an error and `signIn()` rejects with a
+`NemiOAuthError`).
 
 ### Errors
 
@@ -308,9 +313,14 @@ to the running app):
 
 ## Troubleshooting
 
-**`invalid_request` / redirect URI mismatch on the consent screen.** The
-redirect URI must match the registered one character for character,
-including `:/` versus `://`.
+**The sheet shows a Nemi error page and only closing it gets you out
+(`NemiCancelledError`).** The redirect URI (or the client ID) is not
+registered. Nemi never redirects to an unregistered redirect URI (RFC 6749
+section 4.1.2.1), so it shows the error in the browser instead, the sheet
+stays on that page and closing it reads as a cancel. The redirect URI must
+match the registered one character for character, including `:/` versus
+`://`. If sign in "cancels" every time without the consent screen ever
+appearing, check this first.
 
 **The browser opens, I approve, and nothing happens.** The scheme is not
 registered with the OS. Check `scheme` in `app.json` (and rebuild), or the
@@ -318,7 +328,7 @@ iOS URL types and Android intent-filter. Expo Go cannot receive custom
 schemes; use a dev build.
 
 **`signIn()` rejects with `NemiCancelledError`.** The person closed the
-browser. `useNemi().signIn()` turns this into `null`, so only handle it when
+browser (or an error page; see above). `useNemi().signIn()` turns this into `null`, so only handle it when
 you call `NemiNativeAuth` directly.
 
 **Android: the app restarts after approving.** Low memory devices may kill

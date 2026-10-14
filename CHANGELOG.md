@@ -4,6 +4,16 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Fixed
+
+- README: an unregistered redirect URI shows a Nemi error page in the browser
+  and never redirects (RFC 6749 section 4.1.2.1); closing it surfaces as
+  `NemiCancelledError`, not `invalid_request`.
+- `NemiUser.username` is now `preferredUsername`, matching the core SDK.
+- `SignInOptions.prompt` accepts `"consent"` and `"none"`, the values Nemi supports.
+
 ## [0.1.0] - 2026-10-14
 
 ### Added

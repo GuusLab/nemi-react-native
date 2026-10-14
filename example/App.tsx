@@ -50,7 +50,7 @@ function Home() {
           <View style={styles.header}>
             {user?.picture ? <Image source={{ uri: user.picture }} style={styles.avatar} /> : null}
             <View style={{ flex: 1 }}>
-              <Text style={[styles.name, { color: fg }]}>{user?.name ?? user?.username ?? "Signed in"}</Text>
+              <Text style={[styles.name, { color: fg }]}>{user?.name ?? user?.preferredUsername ?? "Signed in"}</Text>
               {user?.email ? <Text style={styles.muted}>{user.email}</Text> : null}
             </View>
             <Pressable accessibilityRole="button" onPress={signOut} style={styles.signOut}>

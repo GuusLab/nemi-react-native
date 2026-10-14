@@ -32,7 +32,8 @@ declare module "@guuslab/nemi" {
   export interface NemiUser {
     id: string;
     name?: string;
-    username?: string;
+    /** Wire name `preferred_username`. Needs `profile`. */
+    preferredUsername?: string;
     picture?: string;
     email?: string;
     emailVerified?: boolean;

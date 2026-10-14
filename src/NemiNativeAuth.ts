@@ -51,8 +51,12 @@ export interface NemiNativeAuthConfig {
 export interface SignInOptions {
   /** Extra or different scopes for this sign in. */
   scopes?: readonly string[];
-  /** `consent` always shows the consent screen. */
-  prompt?: "consent";
+  /**
+   * `consent` always shows the consent screen. `none` never shows a screen and
+   * fails with a `NemiOAuthError` when sign in or consent would be needed.
+   * Nemi supports no other values.
+   */
+  prompt?: "consent" | "none";
 }
 
 export type { NemiUser };
@@ -562,7 +566,7 @@ function withBearer(init: RequestInit | undefined, token: string): RequestInit {
 function userInfoToUser(info: NemiUserInfo): NemiUser {
   const user: NemiUser = { id: info.sub };
   if (info.name) user.name = info.name;
-  if (info.preferredUsername) user.username = info.preferredUsername;
+  if (info.preferredUsername) user.preferredUsername = info.preferredUsername;
   if (info.picture) user.picture = info.picture;
   if (info.email) user.email = info.email;
   if (typeof info.emailVerified === "boolean") user.emailVerified = info.emailVerified;
@@ -577,7 +581,7 @@ function claimsToUser(c: Record<string, unknown>): NemiUser {
   const picture = str(c.picture);
   const email = str(c.email);
   if (name) user.name = name;
-  if (username) user.username = username;
+  if (username) user.preferredUsername = username;
   if (picture) user.picture = picture;
   if (email) user.email = email;
   if (typeof c.email_verified === "boolean") user.emailVerified = c.email_verified;

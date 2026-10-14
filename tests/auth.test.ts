@@ -18,7 +18,7 @@ describe("sign in", () => {
 
     const user = await auth.signIn();
 
-    expect(user).toMatchObject({ id: "pairwise-1", name: "Ada Lovelace", username: "ada", email: "ada@example.com" });
+    expect(user).toMatchObject({ id: "pairwise-1", name: "Ada Lovelace", preferredUsername: "ada", email: "ada@example.com" });
     expect(auth.isSignedIn).toBe(true);
     expect(auth.getState().error).toBeNull();
 
@@ -158,7 +158,7 @@ describe("sign in", () => {
     const handled = await second.handleRedirectUrl(`${REDIRECT}?code=code_123&state=${params.state}`);
     expect(handled).toBe(true);
     expect(second.isSignedIn).toBe(true);
-    expect(second.user?.username).toBe("ada");
+    expect(second.user?.preferredUsername).toBe("ada");
     expect(server.tokenRequests[0]!.get("code_verifier")).toBeTruthy();
 
     // The same link delivered again (Linking event after getInitialURL) is ignored.
