@@ -1,0 +1,16 @@
+{
+  "expo": {
+    "name": "Nemi Example",
+    "slug": "nemi-example",
+    "version": "1.0.0",
+    "scheme": "com.example.nemidemo",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "bundleIdentifier": "com.example.nemidemo"
+    },
+    "android": {
+      "package": "com.example.nemidemo"
+    },
+    "plugins": ["expo-secure-store", "expo-web-browser"]
+  }
+}
