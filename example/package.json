@@ -9,7 +9,7 @@
     "android": "expo run:android"
   },
   "dependencies": {
-    "@guuslab/nemi": "file:../../js",
+    "@guuslab/nemi": "^0.1.0",
     "@guuslab/nemi-react-native": "file:..",
     "expo": "^57.0.0",
     "expo-crypto": "^57.0.0",

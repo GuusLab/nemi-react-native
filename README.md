@@ -89,7 +89,7 @@ Expo Go cannot use your own scheme.
 The full example lives in [`example/`](./example): sign in, the profile and a
 grid of gallery photos. Run `npm run build` in this folder first (the example
 links the SDK's `dist`), then `npm install` and `npx expo run:ios` in
-`example/`. Until the core is published, the example links it from `../../js`.
+`example/`.
 
 ## API
 
@@ -366,12 +366,6 @@ npm run build
 
 `--legacy-peer-deps` skips the `expo` peer of the Expo modules, which are dev
 dependencies here for their types only.
-
-Until `@guuslab/nemi` is on the registry, `npm install` cannot fetch it. Install
-without it (`npm pkg delete dependencies`, install, then
-`git checkout package.json`). The tests run against the core SDK source in
-`../js`, and `types/nemi-core.d.ts` declares its API for the typecheck.
-Delete that file once the core is installed from npm.
 
 Package build: [tsup](https://tsup.egoist.dev). The package is TypeScript only
 (no native code), so `react-native-builder-bob` adds nothing here. Metro uses
